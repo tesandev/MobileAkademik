@@ -10,6 +10,12 @@ class SharedPref(activity: Activity) {
     val mypref = "MAIN_PREF"
     val sp:SharedPreferences
 
+    val name = "name"
+    val id_user = "0"
+    val id_role = "0"
+    val nis = "nis"
+    val role_name = "role_name"
+
     init {
         sp = activity.getSharedPreferences(mypref, Context.MODE_PRIVATE)
     }
@@ -20,5 +26,13 @@ class SharedPref(activity: Activity) {
 
     fun getStatus():Boolean{
         return sp.getBoolean(login, false)
+    }
+
+    fun setString(key: String, vlue: String){
+        return sp.edit().putString(key,vlue).apply()
+    }
+
+    fun getString(key: String):String{
+        return sp.getString(key,"")!!
     }
 }
