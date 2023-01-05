@@ -3,31 +3,31 @@ package com.example.myakademik
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.example.myakademik.pengurus.HomePetugasActivity
+import com.example.myakademik.siswa.HomeSiswaActivity
 import com.example.myakademik.app.ApiConfig
 import com.example.myakademik.helper.SharedPref
 import com.example.myakademik.model.ResponseLogin
-import kotlinx.android.synthetic.main.activity_main.*
-import okhttp3.ResponseBody
+import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private var statusLogin = false
     private lateinit var s:SharedPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_login)
 
         s = SharedPref(this)
 
         if(s.getStatus()){
-            startActivity(Intent(this@MainActivity, Home::class.java))
+            startActivity(Intent(this@LoginActivity, HomeSiswaActivity::class.java))
             finish()
         }
 
@@ -60,9 +60,18 @@ class MainActivity : AppCompatActivity() {
                         s.setString(s.id_role, respon.Data.id_role)
                         s.setString(s.role_name, respon.Data.role_name)
                         s.setString(s.nis, respon.Data.nis)
-                        val intent = Intent(this@MainActivity, Home::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                        startActivity(intent)
+                        val role = s.getString(s.role_name)
+
+                        if( role == "Siswa"){
+                            intent = Intent(this@LoginActivity, HomeSiswaActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                        }else{
+                            intent = Intent(this@LoginActivity, HomePetugasActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                        }
+
                         Toast.makeText(applicationContext,respon.Message+", Selamat datang "+respon.Data.role_name+","+respon.Data.name,Toast.LENGTH_SHORT).show()
                     }else{
                         Toast.makeText(applicationContext,"Error "+respon.Message,Toast.LENGTH_SHORT).show()
