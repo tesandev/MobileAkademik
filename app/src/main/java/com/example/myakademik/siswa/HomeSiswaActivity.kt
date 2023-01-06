@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
+import com.example.myakademik.ListGambarActivity
 import com.example.myakademik.LoginActivity
 import com.example.myakademik.R
 import com.example.myakademik.helper.SharedPref
@@ -32,6 +33,10 @@ class HomeSiswaActivity : AppCompatActivity() {
 
         btn_logout.setOnClickListener {
             logout()
+        }
+
+        btn_list.setOnClickListener {
+            startActivity(Intent(this@HomeSiswaActivity,ListGambarActivity::class.java))
         }
     }
 
