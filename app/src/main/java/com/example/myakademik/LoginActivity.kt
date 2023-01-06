@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
             return
         }
         pb.visibility = View.VISIBLE
-        ApiConfig.instanceRetrofit.login(edt_nis.text.toString(),edt_password.text.toString())
+        ApiConfig.instance.login(edt_nis.text.toString(),edt_password.text.toString())
             .enqueue(object : Callback<ResponseLogin>{
 
                 override fun onResponse(call: Call<ResponseLogin>, response: Response<ResponseLogin>) {
